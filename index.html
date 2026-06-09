@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta de Servicios — Portal de Transparencia UCM</title>
+  <meta name="description" content="Carta de Servicios del Portal de Transparencia de la Universidad Complutense de Madrid. Compromisos de calidad, derechos ciudadanos e indicadores de seguimiento.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Hubot+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ── Variables institucionales ─────────────────────────────── */
+    :root {
+      --ucm-red:       #b71234;
+      --ucm-red-dark:  #8a0d27;
+      --ucm-gold:      #c5a059;
+      --bg:            #f8fafc;
+      --bg-card:       #ffffff;
+      --bg-muted:      #f1f5f9;
+      --text:          #1e293b;
+      --text-muted:    #64748b;
+      --border:        #e2e8f0;
+      --border-light:  rgba(0,0,0,0.07);
+      --success:       #10b981;
+      --radius-sm:     6px;
+      --radius-md:     10px;
+      --radius-lg:     14px;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    a { color: var(--ucm-red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { list-style: none; }
+
+    /* ── Accesibilidad ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+    :focus-visible {
+      outline: 2px solid var(--ucm-red);
+      outline-offset: 2px;
+    }
+
+    /* ── Contenedor ────────────────────────────────────────────── */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── Skip link ─────────────────────────────────────────────── */
+    .skip-link {
+      position: absolute; top: -40px; left: 0;
+      background: var(--ucm-red); color: #fff;
+      padding: 8px 16px; border-radius: 0 0 var(--radius-sm) 0;
+      font-size: 13px; z-index: 100;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── Barra superior ────────────────────────────────────────── */
+    .topbar {
+      background: var(--ucm-red);
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      padding: 6px 0;
+      letter-spacing: 0.3px;
+    }
+    .topbar .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .topbar a { color: rgba(255,255,255,0.85); }
+    .topbar a:hover { color: #fff; }
+
+    /* ── Cabecera ──────────────────────────────────────────────── */
+    header {
+      background: var(--bg-card);
+      border-bottom: 3px solid var(--ucm-gold);
+      padding: 2.5rem 0 2rem;
+    }
+    .header-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--ucm-gold);
+      font-weight: 600;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    header h1 {
+      font-family: 'Hubot Sans', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      color: var(--ucm-red);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .header-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .header-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+    }
+    .header-meta-item {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .header-meta-item svg { color: var(--ucm-gold); flex-shrink: 0; }
+
+    /* ── Navegación interna ────────────────────────────────────── */
+    .nav-inner {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .nav-inner ul {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-inner ul::-webkit-scrollbar { display: none; }
+    .nav-inner a {
+      display: block;
+      padding: 0.75rem 1rem;
+      font-size: 13px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-inner a:hover {
+      color: var(--ucm-red);
+      text-decoration: none;
+      border-bottom-color: var(--ucm-red);
+    }
+
+    /* ── Contenido principal ───────────────────────────────────── */
+    main { padding: 2.5rem 0 4rem; }
+
+    /* ── Títulos de sección ────────────────────────────────────── */
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Hubot Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 2.5rem 0 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-heading .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--ucm-red);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Párrafo de prosa ──────────────────────────────────────── */
+    .prose {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .prose strong { color: var(--text); font-weight: 500; }
+
+    /* ── Tarjetas de info ──────────────────────────────────────── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .info-card {
+      background: var(--bg-muted);
+      border-radius: var(--radius-md);
+      padding: 0.9rem 1rem;
+    }
+    .info-card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .info-card-value {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.45;
+    }
+
+    /* ── Lista de servicios ────────────────────────────────────── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .service-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.7rem 0.9rem;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .service-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--ucm-red);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    /* ── Lista normativa ───────────────────────────────────────── */
+    .norm-list li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      line-height: 1.6;
+    }
+    .norm-list li::before {
+      content: '▸';
+      color: var(--ucm-gold);
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    /* ── Derechos ciudadanos ───────────────────────────────────── */
+    .rights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .right-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      padding: 0.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+    }
+    .right-num {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--ucm-red);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* ── Tabla compromisos ─────────────────────────────────────── */
+    .table-wrap {
+      overflow-x: auto;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    thead tr { background: var(--bg-muted); }
+    th {
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.7rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tr:last-child td { border-bottom: none; }
+    td:first-child { font-weight: 500; color: var(--text); white-space: nowrap; }
+    .badge {
+      display: inline-block;
+      background: #fce8ec;
+      color: var(--ucm-red-dark);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .result-ok {
+      color: var(--success);
+      font-weight: 500;
+    }
+
+    /* ── Bloque gráficos ───────────────────────────────────────── */
+    .charts-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Métricas resumen */
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .metric-card {
+      background: var(--bg-muted);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      text-align: center;
+    }
+    .metric-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .metric-val {
+      font-family: 'Hubot Sans', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--ucm-red);
+    }
+    .metric-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Pestañas de gráfico */
+    .chart-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+    }
+    .chart-tab {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      padding: 5px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.15s;
+    }
+    .chart-tab:hover { background: var(--bg-muted); color: var(--text); }
+    .chart-tab.active {
+      background: var(--ucm-red);
+      border-color: var(--ucm-red);
+      color: #fff;
+    }
+
+    .chart-panel { display: none; }
+    .chart-panel.visible { display: block; }
+
+    /* Leyenda manual */
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 1rem;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Participación ─────────────────────────────────────────── */
+    .participation-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .participation-item {
+      font-size: 13px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 0.7rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      line-height: 1.5;
+    }
+    .participation-icon {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: #fce8ec;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .participation-icon svg { width: 15px; height: 15px; color: var(--ucm-red); }
+
+    /* ── Contacto ──────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .contact-icon-wrap {
+      width: 36px;
+      height: 36px;
+      background: #fce8ec;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon-wrap svg { width: 18px; height: 18px; color: var(--ucm-red); }
+    .contact-label-text { font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .contact-value-text { font-size: 13px; color: var(--text); font-weight: 500; line-height: 1.4; }
+    .contact-link-text { font-size: 12px; color: var(--ucm-red); margin-top: 3px; display: block; }
+
+    /* ── Aviso legal ───────────────────────────────────────────── */
+    .aviso {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .aviso svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* ── Footer ────────────────────────────────────────────────── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.6);
+      padding: 2rem 0;
+      font-size: 12px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .footer-brand {
+      font-family: 'Hubot Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-links a { color: rgba(255,255,255,0.6); }
+    .footer-links a:hover { color: #fff; }
+
+    /* ── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      header { padding: 1.75rem 0 1.5rem; }
+      main { padding: 1.75rem 0 3rem; }
+      .charts-wrapper { padding: 1rem; }
+      .nav-inner a { padding: 0.65rem 0.75rem; font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#contenido" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- BARRA SUPERIOR -->
+  <div class="topbar" role="banner">
+    <div class="container">
+      <span>Universidad Complutense de Madrid</span>
+      <span>
+        <a href="https://www.ucm.es/portaldetransparencia/" target="_blank" rel="noopener">Portal de Transparencia</a>
+        &nbsp;·&nbsp;
+        <a href="https://sede.ucm.es/oficina/tramites/acceso.do?id=8265&block=Procedimientos_Generales_1093&blockType=AREAS_SEDE" target="_blank" rel="noopener">Sede electrónica</a>
+      </span>
+    </div>
+  </div>
+
+  <!-- CABECERA -->
+  <header>
+    <div class="container">
+      <p class="header-eyebrow">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Carta de Servicios
+      </p>
+      <h1>Portal de Transparencia<br>Universidad Complutense de Madrid</h1>
+      <p class="header-desc">Compromiso formal de la UCM con la ciudadanía y la comunidad universitaria para garantizar el acceso a la información pública, la calidad del portal y el cumplimiento de los principios de transparencia y buen gobierno.</p>
+      <div class="header-meta">
+        <span class="header-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Vigencia: 2025–2027
+        </span>
+        <span class="header-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Órgano responsable: Secretaría General
+        </span>
+        <span class="header-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Ley 19/2013 · Ley 10/2019-CM
+        </span>
+        <span class="header-meta-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Próxima revisión: 2027
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN INTERNA -->
+  <nav class="nav-inner" aria-label="Secciones de la carta de servicios">
+    <div class="container">
+      <ul>
+        <li><a href="#presentacion">Presentación</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#identificacion">Identificación</a></li>
+        <li><a href="#normativa">Normativa</a></li>
+        <li><a href="#derechos">Derechos</a></li>
+        <li><a href="#compromisos">Compromisos</a></li>
+        <li><a href="#indicadores">Seguimiento</a></li>
+        <li><a href="#participacion">Participación</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main id="contenido">
+    <div class="container">
+
+      <!-- 1. PRESENTACIÓN -->
+      <section id="presentacion" aria-labelledby="h-presentacion">
+        <h2 class="section-heading" id="h-presentacion">
+          <span class="num" aria-hidden="true">1</span>
+          Presentación
+        </h2>
+        <p class="prose">El <strong>Portal de Transparencia de la Universidad Complutense de Madrid</strong> es el instrumento institucional a través del cual la UCM ejerce su obligación legal de publicidad activa y garantiza el derecho de acceso a la información pública reconocido en la legislación estatal y autonómica.</p>
+        <p class="prose">La presente Carta de Servicios define los compromisos de calidad asumidos por la Secretaría General en la gestión del portal, los derechos reconocidos a los ciudadanos, los cauces de participación y mejora continua, y los indicadores con los que la UCM rinde cuentas públicamente de su desempeño en el período de vigencia 2025–2027.</p>
+        <p class="prose">La UCM, en tanto entidad sujeta al ámbito de aplicación de la <strong>Ley 19/2013, de transparencia, acceso a la información pública y buen gobierno</strong>, y de la <strong>Ley 10/2019 de la Comunidad de Madrid</strong>, asume el compromiso de ofrecer un portal accesible, actualizado, técnicamente fiable y jurídicamente riguroso, que conecte a la institución con los ciudadanos de forma transparente y ágil.</p>
+      </section>
+
+      <!-- 2. SERVICIOS -->
+      <section id="servicios" aria-labelledby="h-servicios">
+        <h2 class="section-heading" id="h-servicios">
+          <span class="num" aria-hidden="true">2</span>
+          Servicios que se prestan
+        </h2>
+        <p class="prose">El Portal de Transparencia UCM ofrece los siguientes servicios a la ciudadanía y a la comunidad universitaria:</p>
+        <div class="services-grid">
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Publicación de información institucional: órganos de gobierno, estructura organizativa, líneas estratégicas y entidades vinculadas</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Información económico-financiera: presupuestos, ejecución, cuentas anuales, contratos, convenios y subvenciones</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Información académica y de investigación: oferta académica, resultados, cátedras extraordinarias y datos de I+D</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Información de personal PDI, PTGAS y personal investigador: plantillas, retribuciones e información sindical</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>UCM en cifras y datos abiertos: estadísticas reutilizables en formatos abiertos e interoperables</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Tramitación de solicitudes de acceso a la información pública mediante sede electrónica y publicación del registro de resoluciones</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Canal de sugerencias, quejas y mejoras del portal con seguimiento estadístico publicado trimestralmente</div>
+          <div class="service-item"><span class="service-dot" aria-hidden="true"></span>Canal de denuncias (CII-UCM) para el personal de la UCM conforme a la Ley 2/2023, reguladora de la protección de informantes</div>
+        </div>
+      </section>
+
+      <!-- 3. IDENTIFICACIÓN -->
+      <section id="identificacion" aria-labelledby="h-identificacion">
+        <h2 class="section-heading" id="h-identificacion">
+          <span class="num" aria-hidden="true">3</span>
+          Datos de identificación y acceso
+        </h2>
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-card-label">Titular del servicio</div>
+            <div class="info-card-value">Universidad Complutense de Madrid</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Órgano responsable</div>
+            <div class="info-card-value">Secretaría General</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">NIF</div>
+            <div class="info-card-value">Q2818014I</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">URL del portal</div>
+            <div class="info-card-value"><a href="https://www.ucm.es/portaldetransparencia/" target="_blank" rel="noopener">ucm.es/portaldetransparencia</a></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Sede electrónica</div>
+            <div class="info-card-value"><a href="https://sede.ucm.es" target="_blank" rel="noopener">sede.ucm.es</a></div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Horario de atención</div>
+            <div class="info-card-value">Portal: 24h / 365 días<br>Presencial: L–V, 9:00–14:00 h</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Supervisión externa</div>
+            <div class="info-card-value">Consejo de Transparencia y Protección de Datos de la Comunidad de Madrid</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-label">Evaluación independiente</div>
+            <div class="info-card-value">Plataforma Dyntra — Índice de Transparencia Universitaria</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. NORMATIVA -->
+      <section id="normativa" aria-labelledby="h-normativa">
+        <h2 class="section-heading" id="h-normativa">
+          <span class="num" aria-hidden="true">4</span>
+          Marco normativo
+        </h2>
+        <p class="prose">La actividad del Portal de Transparencia se enmarca en las siguientes normas:</p>
+        <ul class="norm-list">
+          <li><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2013-12887" target="_blank" rel="noopener">Ley 19/2013, de 9 de diciembre, de transparencia, acceso a la información pública y buen gobierno</a> (arts. 5–22)</li>
+          <li><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2019-10102" target="_blank" rel="noopener">Ley 10/2019, de 10 de abril, de transparencia y participación de la Comunidad de Madrid</a> (arts. 37–46)</li>
+          <li>Ley Orgánica 6/2001, de Universidades, y Ley Orgánica 4/2007 por la que se modifica</li>
+          <li><a href="https://www.boe.es/buscar/doc.php?id=BOE-A-2023-4513" target="_blank" rel="noopener">Ley 2/2023, de 20 de febrero, reguladora de la protección de las personas que informen sobre infracciones normativas</a></li>
+          <li>Reglamento (UE) 2016/679 (RGPD) y Ley Orgánica 3/2018, de Protección de Datos Personales (LOPDGDD)</li>
+          <li>Estatutos de la Universidad Complutense de Madrid</li>
+          <li>Real Decreto 1671/2009 sobre utilización de medios electrónicos en la Administración General del Estado</li>
+        </ul>
+      </section>
+
+      <!-- 5. DERECHOS -->
+      <section id="derechos" aria-labelledby="h-derechos">
+        <h2 class="section-heading" id="h-derechos">
+          <span class="num" aria-hidden="true">5</span>
+          Derechos de la ciudadanía
+        </h2>
+        <p class="prose">Los ciudadanos y la comunidad universitaria tienen reconocidos los siguientes derechos en sus relaciones con el Portal de Transparencia:</p>
+        <div class="rights-grid">
+          <div class="right-item"><div class="right-num" aria-hidden="true">1</div>Acceder gratuitamente a toda la información publicada en el portal sin necesidad de identificarse ni justificar la solicitud</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">2</div>Solicitar información pública no publicada mediante formulario electrónico en sede o en el Registro General de la UCM</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">3</div>Recibir resolución expresa de la solicitud en un plazo máximo de 20 días hábiles, prorrogables motivadamente</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">4</div>Ser informado de los motivos de inadmisión o denegación en un plazo no superior a 5 días hábiles</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">5</div>Interponer reclamación ante el Consejo de Transparencia y Protección de Datos de la Comunidad de Madrid</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">6</div>Presentar sugerencias y quejas sobre el portal y recibir respuesta en un plazo máximo de 10 días hábiles</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">7</div>Obtener la información en formato reutilizable y accesible siempre que sea técnicamente posible</div>
+          <div class="right-item"><div class="right-num" aria-hidden="true">8</div>Conocer el estado de tramitación de las solicitudes a través del Registro público de solicitudes de acceso</div>
+        </div>
+      </section>
+
+      <!-- 6. COMPROMISOS -->
+      <section id="compromisos" aria-labelledby="h-compromisos">
+        <h2 class="section-heading" id="h-compromisos">
+          <span class="num" aria-hidden="true">6</span>
+          Compromisos de calidad e indicadores
+        </h2>
+        <p class="prose">Los siguientes compromisos son de cumplimiento verificable. Los resultados se publican anualmente en esta misma página.</p>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Tabla de compromisos de calidad del Portal de Transparencia UCM con indicadores, objetivos y resultados</caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Compromiso</th>
+                <th scope="col">Indicador</th>
+                <th scope="col">Objetivo</th>
+                <th scope="col">Resultado 2024</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge">C1</span></td>
+                <td>Actualización sistemática — incorporar información económica y de personal tras su aprobación oficial</td>
+                <td>% de contenidos actualizados en el plazo comprometido</td>
+                <td>≥ 95 %</td>
+                <td class="result-ok">97,2 % ✓</td>
+              </tr>
+              <tr>
+                <td><span class="badge">C2</span></td>
+                <td>Derecho de acceso — resolver solicitudes de información pública en plazo reducido respecto al límite legal</td>
+                <td>Días hábiles medios de resolución (límite legal: 20 días)</td>
+                <td>≤ 20 días</td>
+                <td class="result-ok">14,5 días ✓</td>
+              </tr>
+              <tr>
+                <td><span class="badge">C3</span></td>
+                <td>Rigor jurídico — garantizar resoluciones que superen la revisión del Consejo de Transparencia (CTPD-CM)</td>
+                <td>% de resoluciones confirmadas o no impugnadas ante el CTPD-CM</td>
+                <td>≥ 95 %</td>
+                <td class="result-ok">100 % ✓</td>
+              </tr>
+              <tr>
+                <td><span class="badge">C4</span></td>
+                <td>Atención de quejas y sugerencias — dar respuesta expresa a todas las incidencias web recibidas</td>
+                <td>Días hábiles medios de respuesta a quejas y sugerencias</td>
+                <td>≤ 10 días</td>
+                <td class="result-ok">6,2 días ✓</td>
+              </tr>
+              <tr>
+                <td><span class="badge">C5</span></td>
+                <td>Continuidad digital — mantener el portal técnicamente disponible de forma ininterrumpida</td>
+                <td>% de disponibilidad técnica anual del portal</td>
+                <td>≥ 99,5 %</td>
+                <td class="result-ok">99,8 % ✓</td>
+              </tr>
+              <tr>
+                <td><span class="badge">C6</span></td>
+                <td>Excelencia verificada — mantener una puntuación alta en el ranking independiente Dyntra de transparencia universitaria</td>
+                <td>Puntuación Dyntra (universidades españolas, % sobre 100)</td>
+                <td>≥ 90 %</td>
+                <td class="result-ok">94,6 % ✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="prose" style="font-size:12px; margin-top: -0.75rem;">
+          <strong>Nota sobre indicadores de tiempo (C2, C4):</strong> en los compromisos expresados en días, un valor inferior al objetivo implica una mejora en el desempeño del servicio.
+        </p>
+      </section>
+
+      <!-- 7. SEGUIMIENTO GRÁFICO -->
+      <section id="indicadores" aria-labelledby="h-indicadores">
+        <h2 class="section-heading" id="h-indicadores">
+          <span class="num" aria-hidden="true">7</span>
+          Seguimiento gráfico de indicadores
+        </h2>
+
+        <!-- Métricas resumen -->
+        <div class="metric-row" role="list" aria-label="Resumen de indicadores clave">
+          <div class="metric-card" role="listitem">
+            <div class="metric-label">Compromisos cumplidos</div>
+            <div class="metric-val">6/6</div>
+            <div class="metric-sub">100 % de superación (2024)</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-label">Plazo medio acceso</div>
+            <div class="metric-val">14,5</div>
+            <div class="metric-sub">días hábiles (obj. ≤ 20)</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-label">Disponibilidad</div>
+            <div class="metric-val">99,8 %</div>
+            <div class="metric-sub">Uptime anual 2024</div>
+          </div>
+          <div class="metric-card" role="listitem">
+            <div class="metric-label">Dyntra 2026</div>
+            <div class="metric-val">94,6 %</div>
+            <div class="metric-sub">Universidades españolas</div>
+          </div>
+        </div>
+
+        <!-- Gráficos con pestañas -->
+        <div class="charts-wrapper">
+          <div class="chart-tabs" role="tablist" aria-label="Selección de gráfico">
+            <button class="chart-tab active" role="tab" aria-selected="true" aria-controls="panel-radar" onclick="showChart('radar')">Radar global</button>
+            <button class="chart-tab" role="tab" aria-selected="false" aria-controls="panel-bar" onclick="showChart('bar')">Meta vs. real</button>
+            <button class="chart-tab" role="tab" aria-selected="false" aria-controls="panel-trend" onclick="showChart('trend')">Tendencia histórica</button>
+            <button class="chart-tab" role="tab" aria-selected="false" aria-controls="panel-pie" onclick="showChart('pie')">Solicitudes por área</button>
+          </div>
+
+          <!-- Panel radar -->
+          <div id="panel-radar" class="chart-panel visible" role="tabpanel" aria-labelledby="tab-radar">
+            <div style="position:relative; width:100%; height:360px;">
+              <canvas id="chartRadar" role="img" aria-label="Gráfico radar comparando los seis compromisos de calidad con sus objetivos. Todos los resultados superan el objetivo.">Seis compromisos: C1 actualización 97.2%, C2 acceso 14.5 días, C3 rigor 100%, C4 quejas 6.2 días, C5 disponibilidad 99.8%, C6 Dyntra 94.6%.</canvas>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="legend-swatch" style="background:#c5a059;"></span>Objetivo (normalizado 0–100)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#b71234;"></span>Desempeño real 2024</span>
+            </div>
+          </div>
+
+          <!-- Panel barras -->
+          <div id="panel-bar" class="chart-panel" role="tabpanel" aria-labelledby="tab-bar">
+            <div style="position:relative; width:100%; height:360px;">
+              <canvas id="chartBar" role="img" aria-label="Gráfico de barras agrupadas comparando meta y resultado real en cada uno de los seis compromisos de calidad.">Comparativa meta vs real: C1 95/97.2, C2 objetivo 20/real 14.5, C3 95/100, C4 objetivo 10/real 6.2, C5 99.5/99.8, C6 90/94.6.</canvas>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="legend-swatch" style="background:#e2e8f0; border:1px solid #cbd5e1;"></span>Meta de la carta de servicios</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#b71234;"></span>Desempeño real 2024</span>
+            </div>
+          </div>
+
+          <!-- Panel tendencia -->
+          <div id="panel-trend" class="chart-panel" role="tabpanel" aria-labelledby="tab-trend">
+            <div style="position:relative; width:100%; height:360px;">
+              <canvas id="chartTrend" role="img" aria-label="Gráfico de líneas con la evolución del plazo medio de resolución entre 2021 y 2024. La tendencia es descendente: de 18.8 días en 2021 a 14.5 días en 2024.">Evolución plazo de resolución: 2021 18.8 días, 2022 17.2 días, 2023 15.9 días, 2024 14.5 días. Objetivo 20 días. Disponibilidad: 99.1%, 99.4%, 99.6%, 99.8%.</canvas>
+            </div>
+            <div class="legend">
+              <span class="legend-item"><span class="legend-swatch" style="background:#b71234;"></span>Plazo resolución (días, eje izq.)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#c5a059;"></span>Objetivo (20 días)</span>
+              <span class="legend-item"><span class="legend-swatch" style="background:#3b82f6;"></span>Disponibilidad % (eje der.)</span>
+            </div>
+          </div>
+
+          <!-- Panel tarta -->
+          <div id="panel-pie" class="chart-panel" role="tabpanel" aria-labelledby="tab-pie">
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:1.5rem; justify-content:center;">
+              <div style="position:relative; width:260px; height:260px;">
+                <canvas id="chartPie" role="img" aria-label="Gráfico circular con la distribución de solicitudes de acceso a la información pública por área temática en 2024.">Distribución: Área económica 38%, Información institucional 22%, Personal 18%, Académica e investigación 14%, Otros 8%.</canvas>
+              </div>
+              <div id="pie-legend" style="display:flex; flex-direction:column; gap:10px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="aviso" role="note">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span>Los datos de seguimiento mostrados corresponden al ejercicio 2024. Los resultados definitivos de cada anualidad se publican en el primer trimestre del año siguiente. Los valores son indicativos y deben verificarse con los registros internos antes de la publicación oficial.</span>
+        </div>
+      </section>
+
+      <!-- 8. PARTICIPACIÓN -->
+      <section id="participacion" aria-labelledby="h-participacion">
+        <h2 class="section-heading" id="h-participacion">
+          <span class="num" aria-hidden="true">8</span>
+          Participación ciudadana y mejora continua
+        </h2>
+        <p class="prose">El Portal de Transparencia UCM dispone de mecanismos activos de participación que permiten a la comunidad universitaria y a la ciudadanía contribuir a la mejora del servicio:</p>
+        <div class="participation-list">
+          <div class="participation-item">
+            <div class="participation-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <span>Formulario web de sugerencias y mejoras disponible en la sección <a href="https://www.ucm.es/portaldetransparencia/mejoras" target="_blank" rel="noopener">«¡Ayúdanos a mejorar!»</a></span>
+          </div>
+          <div class="participation-item">
+            <div class="participation-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <span>Publicación trimestral de <a href="https://www.ucm.es/portaldetransparencia/estadisticas-quejas-sugerencias" target="_blank" rel="noopener">estadísticas de sugerencias y quejas</a> con categorización por tipo</span>
+          </div>
+          <div class="participation-item">
+            <div class="participation-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
+            </div>
+            <span>Datos de audiencia Google Analytics publicados con periodicidad mensual en el portal</span>
+          </div>
+          <div class="participation-item">
+            <div class="participation-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <span>Evaluación anual independiente mediante el <a href="https://www.ucm.es/portaldetransparencia/ranking-dyntra" target="_blank" rel="noopener">índice Dyntra</a> con publicación de resultados detallados</span>
+          </div>
+          <div class="participation-item">
+            <div class="participation-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            </div>
+            <span>Revisión periódica de esta Carta de Servicios con incorporación de las aportaciones recibidas</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. CONTACTO -->
+      <section id="contacto" aria-labelledby="h-contacto">
+        <h2 class="section-heading" id="h-contacto">
+          <span class="num" aria-hidden="true">9</span>
+          Contacto y canales de atención
+        </h2>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+            </div>
+            <div>
+              <div class="contact-label-text">Portal web</div>
+              <div class="contact-value-text">Portal de Transparencia UCM</div>
+              <a class="contact-link-text" href="https://www.ucm.es/portaldetransparencia/" target="_blank" rel="noopener">ucm.es/portaldetransparencia →</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-label-text">Solicitudes de acceso</div>
+              <div class="contact-value-text">Sede electrónica UCM</div>
+              <a class="contact-link-text" href="https://sede.ucm.es/oficina/tramites/acceso.do?id=8265&block=Procedimientos_Generales_1093&blockType=AREAS_SEDE" target="_blank" rel="noopener">Presentar solicitud →</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div>
+              <div class="contact-label-text">Sugerencias y quejas</div>
+              <div class="contact-value-text">Formulario de mejoras del portal</div>
+              <a class="contact-link-text" href="https://www.ucm.es/portaldetransparencia/mejoras" target="_blank" rel="noopener">Enviar sugerencia →</a>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon-wrap" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-label-text">Dirección postal</div>
+              <div class="contact-value-text">Secretaría General, UCM<br>Avda. de Séneca, 2, 3.ª Planta<br>28040 Madrid</div>
+            </div>
+          </div>
+        </div>
+        <p class="prose">Las reclamaciones frente a resoluciones en materia de acceso a la información pública pueden interponerse ante el <strong>Consejo de Transparencia y Protección de Datos de la Comunidad de Madrid</strong> en el plazo de un mes desde la recepción de la resolución o desde que se produzcan los efectos del silencio administrativo.</p>
+      </section>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">Portal de Transparencia · UCM</div>
+          <div>Carta de Servicios 2025–2027 · Secretaría General</div>
+        </div>
+        <nav aria-label="Enlaces del pie de página">
+          <ul class="footer-links">
+            <li><a href="https://www.ucm.es/portaldetransparencia/" target="_blank" rel="noopener">Portal</a></li>
+            <li><a href="https://www.ucm.es/portaldetransparencia/aviso-legal" target="_blank" rel="noopener">Aviso legal</a></li>
+            <li><a href="https://www.ucm.es/dpd" target="_blank" rel="noopener">Protección de datos</a></li>
+            <li><a href="https://www.ucm.es/portaldetransparencia/contacto" target="_blank" rel="noopener">Contacto</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── JAVASCRIPT ─────────────────────────────────────────────── -->
+  <script>
+    /* Cambio de pestañas */
+    function showChart(id) {
+      const panels = ['radar','bar','trend','pie'];
+      panels.forEach(p => {
+        const panel = document.getElementById('panel-'+p);
+        if (panel) panel.classList.remove('visible');
+      });
+      const target = document.getElementById('panel-'+id);
+      if (target) target.classList.add('visible');
+
+      document.querySelectorAll('.chart-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+      });
+      const order = {radar:0,bar:1,trend:2,pie:3};
+      const tabs = document.querySelectorAll('.chart-tab');
+      if (tabs[order[id]]) {
+        tabs[order[id]].classList.add('active');
+        tabs[order[id]].setAttribute('aria-selected','true');
+      }
+    }
+
+    /* Inicializar gráficos cuando el DOM esté listo */
+    document.addEventListener('DOMContentLoaded', function () {
+      const GRID = 'rgba(100,116,139,0.12)';
+      const TICK = '#94a3b8';
+
+      Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+      Chart.defaults.font.size   = 12;
+      Chart.defaults.color       = TICK;
+
+      /* ── Radar ── */
+      new Chart(document.getElementById('chartRadar'), {
+        type: 'radar',
+        data: {
+          labels: ['C1 Actualización','C2 Acceso*','C3 Rigor legal','C4 Quejas*','C5 Disponibilidad','C6 Dyntra'],
+          datasets: [
+            {
+              label: 'Objetivo (normalizado)',
+              data: [95, 67, 95, 62, 99.5, 90],
+              backgroundColor: 'rgba(197,160,89,0.10)',
+              borderColor: '#c5a059',
+              borderWidth: 1.5,
+              borderDash: [4,3],
+              pointBackgroundColor: '#c5a059',
+              pointRadius: 3,
+              pointHoverRadius: 5
+            },
+            {
+              label: 'Desempeño real 2024',
+              data: [97.2, 72.5, 100, 62, 99.8, 94.6],
+              backgroundColor: 'rgba(183,18,52,0.10)',
+              borderColor: '#b71234',
+              borderWidth: 2,
+              pointBackgroundColor: '#b71234',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                footer: (items) => {
+                  const i = items[0].dataIndex;
+                  return (i===1||i===3) ? '* Normalizado: menor plazo = mayor puntuación' : '';
+                }
+              }
+            }
+          },
+          scales: {
+            r: {
+              min: 0, max: 100,
+              ticks: { stepSize: 25, display: false },
+              grid: { color: GRID },
+              angleLines: { color: GRID },
+              pointLabels: { font: { size: 11 }, color: TICK }
+            }
+          }
+        }
+      });
+
+      /* ── Barras ── */
+      new Chart(document.getElementById('chartBar'), {
+        type: 'bar',
+        data: {
+          labels: ['C1\nActualiz.','C2\nAcceso †','C3\nRigor legal','C4\nQuejas †','C5\nDisponib.','C6\nDyntra'],
+          datasets: [
+            {
+              label: 'Meta',
+              data: [95, 20, 95, 10, 99.5, 90],
+              backgroundColor: '#e2e8f0',
+              borderColor: '#cbd5e1',
+              borderWidth: 1,
+              borderRadius: 5
+            },
+            {
+              label: 'Real 2024',
+              data: [97.2, 14.5, 100, 6.2, 99.8, 94.6],
+              backgroundColor: '#b71234',
+              hoverBackgroundColor: '#8a0d27',
+              borderRadius: 5
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                footer: (items) => {
+                  const i = items[0].dataIndex;
+                  return (i===1||i===3) ? '† En plazos, menor es mejor.' : '';
+                }
+              }
+            }
+          },
+          scales: {
+            y: { beginAtZero: true, max: 110, grid: { color: GRID } },
+            x: {
+              grid: { display: false },
+              ticks: { maxRotation: 0, font: { size: 11 } }
+            }
+          }
+        }
+      });
+
+      /* ── Tendencia ── */
+      new Chart(document.getElementById('chartTrend'), {
+        type: 'line',
+        data: {
+          labels: ['2021','2022','2023','2024'],
+          datasets: [
+            {
+              label: 'Plazo medio resolución (días)',
+              data: [18.8, 17.2, 15.9, 14.5],
+              borderColor: '#b71234',
+              backgroundColor: 'rgba(183,18,52,0.07)',
+              borderWidth: 2,
+              pointBackgroundColor: '#b71234',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              tension: 0.35,
+              fill: true,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Objetivo (20 días)',
+              data: [20, 20, 20, 20],
+              borderColor: '#c5a059',
+              borderWidth: 1.5,
+              borderDash: [5,4],
+              pointRadius: 0,
+              fill: false,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Disponibilidad % (eje dcha.)',
+              data: [99.1, 99.4, 99.6, 99.8],
+              borderColor: '#3b82f6',
+              borderWidth: 2,
+              borderDash: [3,2],
+              pointRadius: 4,
+              pointBackgroundColor: '#3b82f6',
+              tension: 0.3,
+              fill: false,
+              yAxisID: 'y2'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            y: {
+              beginAtZero: false, min: 12, max: 22,
+              grid: { color: GRID },
+              title: { display: true, text: 'Días hábiles', color: TICK, font: { size: 11 } }
+            },
+            y2: {
+              position: 'right',
+              min: 98.5, max: 100.5,
+              grid: { display: false },
+              title: { display: true, text: 'Disponibilidad %', color: '#3b82f6', font: { size: 11 } },
+              ticks: { color: '#3b82f6' }
+            },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+
+      /* ── Donut solicitudes ── */
+      const pieColors = ['#b71234','#c5a059','#3b82f6','#10b981','#94a3b8'];
+      const pieLabels = ['Área económica','Institucional','Personal','Académica','Otros'];
+      const pieData   = [38, 22, 18, 14, 8];
+
+      new Chart(document.getElementById('chartPie'), {
+        type: 'doughnut',
+        data: {
+          labels: pieLabels,
+          datasets: [{
+            data: pieData,
+            backgroundColor: pieColors,
+            borderWidth: 3,
+            borderColor: '#ffffff',
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          cutout: '60%'
+        }
+      });
+
+      /* Leyenda manual del donut */
+      const legend = document.getElementById('pie-legend');
+      if (legend) {
+        pieLabels.forEach((label, i) => {
+          legend.innerHTML += `
+            <span style="display:flex;align-items:center;gap:8px;font-size:13px;color:#64748b;">
+              <span style="width:10px;height:10px;border-radius:2px;background:${pieColors[i]};flex-shrink:0;"></span>
+              <span>${label} — <strong style="color:#1e293b;">${pieData[i]}%</strong></span>
+            </span>`;
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
